@@ -20,7 +20,7 @@ public class Product {
     private String color;
     private String imagePath;
     private int rating;
-    private int nbrOfReviews;
+    private int noOfReviews;
     private String description;
     private int price;
 }
