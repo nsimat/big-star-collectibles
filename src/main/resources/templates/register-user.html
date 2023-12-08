@@ -35,6 +35,12 @@
     <link rel="stylesheet" href="css/about.css?ver=2209221241">
 </head>
 <body>
+<style>
+    .error {
+        color: red;
+        font-size: medium;
+    }
+</style>
 
 <div id="skip">
     <a href="#main">Skip to main content</a>
@@ -60,12 +66,14 @@
                         <span class="single-line">
 								<input th:field="*{email}" id="contact-email" type="email" required>
 							</span>
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="error"></p>
                     </div>
                     <div>
                         <label for="contact-name">Your name <span aria-hidden="true">*</span></label>
                         <span class="single-line">
 								<input th:field="*{name}" id="contact-name" type="text" required>
 							</span>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error"></p>
                     </div>
                     <div>
                         <label for="gender">Gender <span aria-hidden="true">*</span></label>
@@ -84,21 +92,25 @@
                                     stroke-width="0"/>
                         </svg>
                     </span>
+                        <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="error"></p>
                     </div>
                     <div>
                         <label for="date-of-birth">Date of birth <span aria-hidden="true">*</span></label>
                         <span class="single-line">
                         <input th:field="*{dateOfBirth}" id="date-of-birth" type="date">
                     </span>
+                        <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" th:errorclass="error"></p>
                     </div>
                     <div>
-                        <label   for="contact-message">Message </label>
+                        <label for="contact-message">Message </label>
                         <textarea th:field="*{message}" id="contact-message"></textarea>
+                        <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}" th:errorclass="error"></p>
                     </div>
                     <fieldset>
                         <legend>Sign up for the Big Star newsletter?<span aria-hidden="true">*</span></legend>
                         <div>
-                            <input th:field="*{newsLetter}" id="newsletter-no" type="radio" name="newsletter" value="no">
+                            <input th:field="*{newsLetter}" id="newsletter-no" type="radio" name="newsletter"
+                                   value="no">
                             <label for="newsletter-no">No thanks.</label>
                         </div>
                         <div>
@@ -106,6 +118,7 @@
                                    value="yes">
                             <label for="newsletter-yes">Yes please! Notify me about new products and coupons.</label>
                         </div>
+                        <p th:if="${#fields.hasErrors('newsLetter')}" th:errors="*{newsLetter}" th:errorclass="error"></p>
                     </fieldset>
                     <fieldset>
                         <legend>What are your favorite Big Star Collections?<span aria-hidden="true">*</span></legend>
@@ -159,6 +172,7 @@
                                 Technivores
                             </label>
                         </div>
+                        <p th:if="${#fields.hasErrors('favoriteCollection')}" th:errors="*{favoriteCollection}" th:errorclass="error"></p>
                     </fieldset>
                     <div>
                         <button type="submit" class="button lg solid gold">Submit</button>
@@ -173,11 +187,13 @@
                     <span itemprop="name">Big Star Headquarters</span><br>
                     <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
 							<span itemprop="streetAddress">123 Rode Road</span><br>
-							<span itemprop="addressLocality">Los Angeles</span>, <span itemprop="addressRegion">CA</span> <span
+							<span itemprop="addressLocality">Los Angeles</span>, <span
+                            itemprop="addressRegion">CA</span> <span
                             itemprop="postalCode">90000</span>
 						</span>
                 </p>
-                <a href="tel:888-111-1111" aria-label="Phone number of Big Star Headquarters: 8 8 8. 1 1 1. 1 1 1 1."><span
+                <a href="tel:888-111-1111"
+                   aria-label="Phone number of Big Star Headquarters: 8 8 8. 1 1 1. 1 1 1 1."><span
                         itemprop="telephone">(888) 111-1111</span></a>
                 <figure>
                     <figcaption>Follow us</figcaption>
@@ -232,58 +248,69 @@
                         <dt itemprop="name">Big Star Los Angeles</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">234 Long Boulevard</span><br>
-                            <span itemprop="addressLocality">Los Angeles</span>, <span itemprop="addressRegion">CA</span> <span
+                            <span itemprop="addressLocality">Los Angeles</span>, <span
+                                itemprop="addressRegion">CA</span> <span
                                 itemprop="postalCode">98765</span>
                         </dd>
                         <dd><a href="tel:888-222-2222"
-                               aria-label="Phone number of Big Star Los Angeles: 8 8 8. 2 2 2. 2 2 2 2."><span itemprop="telephone">(888) 222-2222</span></a>
+                               aria-label="Phone number of Big Star Los Angeles: 8 8 8. 2 2 2. 2 2 2 2."><span
+                                itemprop="telephone">(888) 222-2222</span></a>
                         </dd>
                     </div>
                     <div itemscope itemtype="https://schema.org/LocalBusiness" itemref="hq">
                         <dt itemprop="name">Big Star San Francisco</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">345 Awesome Avenue</span><br>
-                            <span itemprop="addressLocality">San Francisco</span>, <span itemprop="addressRegion">CA</span> <span
+                            <span itemprop="addressLocality">San Francisco</span>, <span
+                                itemprop="addressRegion">CA</span> <span
                                 itemprop="postalCode">91234</span>
                         </dd>
-                        <dd><a href="tel:888-333-3333" aria-label="Phone number: 8 8 8. 3 3 3. 3 3 3 3."><span itemprop="telephone">(888) 333-3333</span></a>
+                        <dd><a href="tel:888-333-3333" aria-label="Phone number: 8 8 8. 3 3 3. 3 3 3 3."><span
+                                itemprop="telephone">(888) 333-3333</span></a>
                         </dd>
                     </div>
                     <div itemscope itemtype="https://schema.org/LocalBusiness" itemref="hq">
                         <dt itemprop="name">Big Star Seattle</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">456 Straight Street</span><br>
-                            <span itemprop="addressLocality">Seattle</span>, <span itemprop="addressRegion">WA</span> <span
-                                itemprop="postalCode">98765</span>
+                            <span itemprop="addressLocality">Seattle</span>, <span itemprop="addressRegion">WA</span>
+                            <span
+                                    itemprop="postalCode">98765</span>
                         </dd>
-                        <dd><a href="tel:888-444-4444" aria-label="Phone number of Big Star Seattle: 8 8 8. 4 4 4. 4 4 4 4."><span
+                        <dd><a href="tel:888-444-4444"
+                               aria-label="Phone number of Big Star Seattle: 8 8 8. 4 4 4. 4 4 4 4."><span
                                 itemprop="telephone">(888) 444-4444</span></a></dd>
                     </div>
                     <div itemscope itemtype="https://schema.org/LocalBusiness" itemref="hq">
                         <dt itemprop="name">Big Star Phoenix</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">567 Pace Place</span><br>
-                            <span itemprop="addressLocality">Phoenix</span>, <span itemprop="addressRegion">AZ</span> <span
-                                itemprop="postalCode">87654</span>
+                            <span itemprop="addressLocality">Phoenix</span>, <span itemprop="addressRegion">AZ</span>
+                            <span
+                                    itemprop="postalCode">87654</span>
                         </dd>
-                        <dd><a href="tel:888-555-5555" aria-label="Phone number of Big Star Phoenix: 8 8 8. 5 5 5. 5 5 5 5."><span
+                        <dd><a href="tel:888-555-5555"
+                               aria-label="Phone number of Big Star Phoenix: 8 8 8. 5 5 5. 5 5 5 5."><span
                                 itemprop="telephone">(888) 555-5555</span></a></dd>
                     </div>
                     <div itemscope itemtype="https://schema.org/LocalBusiness" itemref="hq">
                         <dt itemprop="name">Big Star Houston</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">678 Lasso Lane</span><br>
-                            <span itemprop="addressLocality">Houston</span>, <span itemprop="addressRegion">TX</span> <span
-                                itemprop="postalCode">76543</span>
+                            <span itemprop="addressLocality">Houston</span>, <span itemprop="addressRegion">TX</span>
+                            <span
+                                    itemprop="postalCode">76543</span>
                         </dd>
-                        <dd><a href="tel:888-666-6666" aria-label="Phone number of Big Star Houston: 8 8 8. 6 6 6. 6 6 6 6."><span
+                        <dd><a href="tel:888-666-6666"
+                               aria-label="Phone number of Big Star Houston: 8 8 8. 6 6 6. 6 6 6 6."><span
                                 itemprop="telephone">(888) 666-6666</span></a></dd>
                     </div>
                     <div itemscope itemtype="https://schema.org/LocalBusiness" itemref="hq">
                         <dt itemprop="name">Big Star New York City</dt>
                         <dd itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <span itemprop="streetAddress">789 Cart Court</span><br>
-                            <span itemprop="addressLocality">New York City</span>, <span itemprop="addressRegion">NY</span> <span
+                            <span itemprop="addressLocality">New York City</span>, <span
+                                itemprop="addressRegion">NY</span> <span
                                 itemprop="postalCode">12345</span>
                         </dd>
                         <dd><a href="tel:888-777-7777"
