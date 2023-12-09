@@ -16,6 +16,12 @@ public class HomeController {
 
     @GetMapping("/getCharacter/{charname}")
     public String getCharacter(@PathVariable("charname") String charName){
+
         return "/characters/" + charName;
+    }
+
+    @GetMapping("/about")
+    public String displayAbout(){
+        return "about";
     }
 }
