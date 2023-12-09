@@ -3,6 +3,7 @@ package nsimat.edu.collectibles.controllers;
 import jakarta.validation.Valid;
 import nsimat.edu.collectibles.beans.User;
 import nsimat.edu.collectibles.dao.UserRepository;
+import nsimat.edu.collectibles.services.UserService;
 import nsimat.edu.collectibles.validators.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     //private final UserValidator userValidator;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserService userService) {
+        this.userService = userService;
         //this.userValidator = userValidator;
-        this.userRepository = userRepository;
     }
 
     /*@InitBinder
@@ -41,11 +42,15 @@ public class UserController {
                            BindingResult result,
                            Model model){
 
-        if(result.hasErrors()) {
+        if(result.hasErrors() || userService.userExists(user)) {
+
+            if(userService.userExists(user)){
+                model.addAttribute("userFound", true);
+            }
             return "register-user";
         }
 
-        var userSaved = userRepository.save(user);
+        var userSaved = userService.saveUser(user);
         if(userSaved != null){
             model.addAttribute("userSaved", true);
         }

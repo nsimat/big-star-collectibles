@@ -45,6 +45,11 @@
         color: green;
         font-size: medium;
     }
+
+    .warning {
+        color: orangered;
+        font-size: medium;
+    }
 </style>
 
 <div id="skip">
@@ -65,6 +70,7 @@
             <div class="wrapper">
                 <h1>Register with us</h1>
                 <p th:if="${userSaved}" th:text="#{usersaved.success}" th:class="success"></p>
+                <p th:if="${userFound}" th:text="#{userFound.warning}" th:class="warning"></p>
                 <form th:method="post" th:action="@{/saveUser}" th:object="${user}" novalidate>
                     <div>
                         <label for="contact-email">Your email <span aria-hidden="true">*</span></label>

@@ -2,6 +2,7 @@ package nsimat.edu.collectibles.controllers;
 
 import nsimat.edu.collectibles.beans.Product;
 import nsimat.edu.collectibles.dao.ProductRepository;
+import nsimat.edu.collectibles.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,16 +13,16 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @PostMapping("/search")
     public String search(@RequestParam("searchString") String keyword, Model model){
 
-        var products = productRepository.searchByName(keyword);
+        var products = productService.findProductList(keyword);
         model.addAttribute("products", products);
         model.addAttribute("searchedFor", keyword);
 
