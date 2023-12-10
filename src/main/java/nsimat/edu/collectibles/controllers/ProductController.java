@@ -32,7 +32,7 @@ public class ProductController {
     @PostMapping("/search")
     public String search(@RequestParam("searchString") String keyword, Model model){
 
-        var products = productService.findProductList(keyword);
+        var products = productService.searchProductsByName(keyword);
         model.addAttribute("products", products);
         model.addAttribute("searchedFor", keyword);
 
@@ -57,6 +57,6 @@ public class ProductController {
         }catch(InterruptedException exception){
             throw new RuntimeException("Something happened during waiting for products!!!");
         }
-        return null;
+        return productService.findAllProducts();
     }
 }
