@@ -59,4 +59,10 @@ public class ProductController {
         }
         return productService.findAllProducts();
     }
+
+    @GetMapping("/getProductDetails")
+    public String getProductDetails(Model model, @RequestParam("id") String productId){
+        model.addAttribute("product", productService.searchProductById(productId));
+        return "product-details";
+    }
 }

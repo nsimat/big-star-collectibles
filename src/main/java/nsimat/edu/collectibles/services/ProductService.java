@@ -9,5 +9,5 @@ public interface ProductService {
     List<Product> searchProductsByName(String keyword);
 
     Iterable<Product> findAllProducts();
-
+    Product searchProductById(String id);
 }
