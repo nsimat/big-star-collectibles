@@ -10,15 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 @Controller
 public class ProductController {
 
-    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductService productService;
 
@@ -51,7 +53,7 @@ public class ProductController {
 
     private Iterable<Product> getProducts() {
 
-        logger.info("Getting all products as we are on the spring executor thread");
+        LOG.info("Getting all products as we are on the spring executor thread");
         try{
             Thread.sleep(6000);
         }catch(InterruptedException exception){
@@ -63,6 +65,21 @@ public class ProductController {
     @GetMapping("/getProductDetails")
     public String getProductDetails(Model model, @RequestParam("id") String productId){
         model.addAttribute("product", productService.searchProductById(productId));
+        return "product-details";
+    }
+
+    @PostMapping("/addToCart")
+    public String addToCart(Model model, @SessionAttribute("cart")Map<String, Integer> cart,
+                            @RequestParam("productId") String productId,
+                            @RequestParam("quantity") Integer quantity){
+
+        LOG.info("Cart : {}", cart);
+
+        if(!cart.containsKey(productId)){
+            cart.put(productId, 0);
+        }
+        cart.put(productId, cart.get(productId) + quantity);
+        LOG.info("After adding to cart : {}", cart);
         return "product-details";
     }
 }
