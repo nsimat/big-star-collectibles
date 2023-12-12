@@ -61,7 +61,7 @@
             <p>Product ID: <span th:text="${product.id}" itemprop="productID"></span></p>
         </header>
         <p th:text="${product.description}" itemprop="description"></p>
-        <form method="post">
+        <form th:method="post" th:action="@{/addToCart}">
             <fieldset>
                 <legend>Colors:</legend>
                 <div>

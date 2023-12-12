@@ -21,9 +21,7 @@ import java.util.concurrent.Executor;
 public class ProductController {
 
     private final Logger LOG = LoggerFactory.getLogger(ProductController.class);
-
     private final ProductService productService;
-
     private final Executor asyncExecutor;
 
     public ProductController(ProductService productService, Executor asyncExecutor) {
@@ -80,6 +78,6 @@ public class ProductController {
         }
         cart.put(productId, cart.get(productId) + quantity);
         LOG.info("After adding to cart : {}", cart);
-        return "product-details";
+        return "redirect:/getProductDetails?id=" + productId;
     }
 }
