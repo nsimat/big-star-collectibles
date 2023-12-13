@@ -24,4 +24,14 @@ public class HomeController {
     public String displayAbout(){
         return "about";
     }
+
+    @GetMapping("/contact-us")
+    public String displayContact(){
+        return "contact-us";
+    }
+
+    @GetMapping("/seeAll/{charcollection}")
+    public String seeAllCharacters(@PathVariable("charcollection") String charcollection){
+        return "/characters/" + charcollection;
+    }
 }
