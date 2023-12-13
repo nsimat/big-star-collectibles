@@ -2,6 +2,9 @@ package nsimat.edu.collectibles.restcontrollers;
 
 import nsimat.edu.collectibles.beans.Product;
 import nsimat.edu.collectibles.services.ProductService;
+import org.springframework.data.util.Streamable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +18,14 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-    @GetMapping("/bigstar/api/products")
+    /*@GetMapping("/bigstar/api/products")
     public List<Product> allProducts(){
         return (List<Product>) productService.findAllProducts();
+    }*/
+
+    @GetMapping("/bigstar/api/products")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        return new ResponseEntity<>(Streamable.of(productService.findAllProducts()).stream().toList(), HttpStatus.OK);
     }
 
     @GetMapping("/bigstar/api/products/{id}")
