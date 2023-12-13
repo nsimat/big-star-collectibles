@@ -5,6 +5,7 @@ import nsimat.edu.collectibles.dao.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -28,5 +29,14 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product searchProductById(String id) {
         return productRepository.searchById(id);
+    }
+
+    public Optional<Product> findProductById(int id){
+        return productRepository.findById(Integer.valueOf(id));
+    }
+
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
 }
