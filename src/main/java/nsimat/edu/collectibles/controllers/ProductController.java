@@ -1,5 +1,6 @@
 package nsimat.edu.collectibles.controllers;
 
+import nsimat.edu.collectibles.beans.Filter;
 import nsimat.edu.collectibles.beans.Product;
 import nsimat.edu.collectibles.dao.ProductRepository;
 import nsimat.edu.collectibles.services.ProductService;
@@ -44,6 +45,7 @@ public class ProductController {
         DeferredResult<String> deferredResult = new DeferredResult<>();
         asyncExecutor.execute(() -> {
             model.addAttribute("products", getProducts());
+            model.addAttribute("filter", new Filter());
             deferredResult.setResult("product-list");
         });
         return deferredResult;
