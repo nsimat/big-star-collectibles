@@ -2,18 +2,17 @@ package nsimat.edu.collectibles.controllers;
 
 import nsimat.edu.collectibles.beans.Filter;
 import nsimat.edu.collectibles.beans.Product;
+import nsimat.edu.collectibles.beans.ProductCategory;
 import nsimat.edu.collectibles.dao.ProductRepository;
 import nsimat.edu.collectibles.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -49,6 +48,30 @@ public class ProductController {
             deferredResult.setResult("product-list");
         });
         return deferredResult;
+    }
+
+    @PostMapping("/filterProducts")
+    public String filterProductsBasedOnProductType(@ModelAttribute("filter") Filter filter, Model model){
+        // Get all selected types
+        // Get the category_id for every type and the DB
+        List<Product> filteredProductTypes = new ArrayList<>();
+        List<String> selectedTypes = filter.getSelectedType();
+        for(var token  : selectedTypes){
+            if(token.equals("ALL")){
+                productService.findAllProducts().forEach(product -> {
+                    filteredProductTypes.add(product);
+                });
+                break;
+            } else {
+                int categoryId = ProductCategory.valueOf(token).getId();
+                filteredProductTypes.addAll(productService.searchProductsByCategory(categoryId));
+            }
+        }
+
+        model.addAttribute("products", filteredProductTypes);
+        model.addAttribute("filter", filter);
+
+        return "product-list";
     }
 
     private Iterable<Product> getProducts() {
